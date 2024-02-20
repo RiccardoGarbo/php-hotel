@@ -1,7 +1,6 @@
 <?php
-include 'data.php'
+include 'data.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +13,14 @@ include 'data.php'
     <!--Bootstrap-->
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css' integrity='sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==' crossorigin='anonymous'/>
 </head>
-<body class="container" >             
+<body class="container" > 
+<form action="" method="GET">
+        <div class="mb-3">
+            <label for="parkingFilter" class="form-label">Filtra per parcheggio:</label>
+            <input type="checkbox" name="parking" value="1" <?php if(isset($_GET['parking']) && $_GET['parking'] === true) ; ?>>
+        </div>
+        <button type="submit" class="btn btn-primary">Filtra</button>
+    </form>        
         <table class="table">
             <thead>
                 <tr>
@@ -26,7 +32,8 @@ include 'data.php'
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($hotels as  $hotel) : ?>     
+                <?php foreach ($hotels as  $hotel) : ?>   
+                    <?php if(isset($_GET['parking']) && $_GET['parking'] === '1' && !$hotel['parking']) continue ?>   
                     <?php if($hotel['parking'] === true ) : ?> 
                        <?php $hotel['parking'] = '<i class="fa-solid fa-circle-check"></i>'?>
                     <?php else: ?>
